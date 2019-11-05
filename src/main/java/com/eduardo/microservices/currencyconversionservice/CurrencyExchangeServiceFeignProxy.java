@@ -1,11 +1,13 @@
 package com.eduardo.microservices.currencyconversionservice;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 // Name is important: Exact same name as the one we wrote in the file application.propeties of the other microservice
-@FeignClient(name = "currency-exchange-service", url = "localhost:8000")
+@FeignClient(name = "currency-exchange-service")
+@RibbonClient(name = "currency-exchange-service")	// The list of URLs of the remote service instances are in the file application.properties
 public interface CurrencyExchangeServiceFeignProxy {
 	
 	// Copy-paste the method retrieveCurrencyExchangeValue() from the original file CurrencyExchangeValueResource.java

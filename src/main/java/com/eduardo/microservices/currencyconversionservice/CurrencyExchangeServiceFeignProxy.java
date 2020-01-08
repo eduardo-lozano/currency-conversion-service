@@ -6,16 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 // Name is important: Exact same name as the one we wrote in the file application.propeties of the other microservice
-@FeignClient(name = "currency-exchange-service")
-@RibbonClient(name = "currency-exchange-service")	// The list of URLs of the remote service instances are in the file application.properties
+@FeignClient(name = "netflix-zuul-api-gateway-server")		// Calling the Zuul server name
+@RibbonClient(name = "currency-exchange-service")
 public interface CurrencyExchangeServiceFeignProxy {
-	
-	// Copy-paste the method retrieveCurrencyExchangeValue() from the original file CurrencyExchangeValueResource.java
-	// The only things to change:
-	// 1) The return type from the original CurrencyExchangeValue to the current CurrencyConversionBean (the other bean
-	//    literally don't exist here).
-	// 2) Delete the implementation, just leave the definition of the method.
-	@GetMapping("/currency-exchange/from/{currencyFrom}/to/{currencyTo}")
+
+	@GetMapping("/currency-exchange-service/currency-exchange/from/{currencyFrom}/to/{currencyTo}")		// Note the name of the service we want to ultimately call, added at the beginning of this path
 	public CurrencyConversionBean retrieveCurrencyExchangeValue(
 			@PathVariable String currencyFrom, @PathVariable String currencyTo);
 }
